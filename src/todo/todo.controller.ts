@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/createtodo.dto';
@@ -20,6 +21,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Todo } from './entities/todo.entity';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
 @ApiTags('todos')
 @Controller('todos')
@@ -27,6 +29,7 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'Created Todo', type: Todo })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -35,6 +38,7 @@ export class TodoController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'List of Todos', type: [Todo] })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -43,6 +47,7 @@ export class TodoController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'Todo', type: Todo })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -51,6 +56,7 @@ export class TodoController {
   }
 
   @Get('/filter')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'List of Todos', type: [Todo] })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -60,6 +66,7 @@ export class TodoController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'Updated Todo', type: Todo })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -68,6 +75,7 @@ export class TodoController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'Deleted Todo', type: Todo })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })

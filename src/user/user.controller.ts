@@ -6,6 +6,7 @@ import {
   Put,
   Query,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiForbiddenResponse,
@@ -17,7 +18,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { UserQueryDTO } from './dtos/userquery.dto';
 import { UpdateUserDTO } from './dtos/updateuser.dto';
-
+import { JwtAuthGuard } from '../auth/auth.guard';
 /**
  * User Controller Class
  */
@@ -27,6 +28,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'List of Users', type: [User] })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -36,6 +38,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'User Result', type: User })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -44,6 +47,7 @@ export class UserController {
   }
 
   @Put()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'User Result', type: User })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
@@ -52,6 +56,7 @@ export class UserController {
   }
 
   @Delete()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ description: 'User Result', type: User })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Error Occured at Server' })
