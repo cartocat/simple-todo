@@ -11,6 +11,7 @@ import configuration from './config/configuration';
 import { AdminModule } from '@adminjs/nestjs';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { Todo } from './todo/entities/todo.entity';
 
 AdminJS.registerAdapter({ Database, Resource });
 @Module({
@@ -34,7 +35,7 @@ AdminJS.registerAdapter({ Database, Resource });
     AdminModule.createAdmin({
       adminJsOptions: {
         rootPath: '/admin',
-        resources: [User],
+        resources: [User, Todo],
       },
     }),
     AuthModule,
